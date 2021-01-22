@@ -1,25 +1,32 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import {Alert, Button, View} from 'react-native';
 import PropTypes from 'prop-types';
-import {MainContext} from '../contexts/MainContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useRegister} from '../hooks/ApiHooks';
+import {useLogin, useRegister} from '../hooks/ApiHooks';
 import FormTextInput from './FormTextInput';
 import useSignUpForm from '../hooks/RegisterHooks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useContext} from 'react';
+import {MainContext} from '../contexts/MainContext';
 
 const RegisterForm = ({navigation}) => {
+  const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {inputs, handleInputChange} = useSignUpForm();
   const {postRegister} = useRegister();
+  const {postLogin} = useLogin();
 
   const doRegister = async () => {
     try {
       const result = await postRegister(inputs);
       console.log('doRegister ok', result.message);
       Alert.alert(result.message);
-      // TODO: do automatic login, store token, etc..
+      // do automatic login after registering
+      const userData = await postLogin(inputs);
+      await AsyncStorage.setItem('userToken', userData.token);
+      setIsLoggedIn(true);
+      setUser(userData.user);
     } catch (error) {
       console.log('registration error', error);
-      Alert.alert('register fail');
+      Alert.alert(error.message);
     }
   };
 
