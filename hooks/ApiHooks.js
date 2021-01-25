@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {baseUrl} from '../utils/variables';
 
-// general function for fetching (fetchOptions default value is empty object)
+// general function for fetching (options default value is empty object)
 const doFetch = async (url, options = {}) => {
   const response = await fetch(url, options);
   const json = await response.json();
