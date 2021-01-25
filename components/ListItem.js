@@ -7,6 +7,7 @@ const ListItem = ({navigation, singleMedia}) => {
   // console.log(props);
   return (
     <RNEListItem
+      bottomDivider
       onPress={() => {
         navigation.navigate('Single', {file: singleMedia});
       }}
