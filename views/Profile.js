@@ -24,7 +24,9 @@ const Profile = ({navigation}) => {
     const fetchAvatar = async () => {
       try {
         const avatarList = await getAvatar(user.user_id);
-        setAvatar(uploadsUrl + avatarList.pop().filename);
+        if (avatarList.length > 0) {
+          setAvatar(uploadsUrl + avatarList.pop().filename);
+        }
       } catch (error) {
         console.error(error.message);
       }
