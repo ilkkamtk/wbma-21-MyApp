@@ -94,15 +94,15 @@ const useUser = () => {
 };
 
 const useTag = () => {
-  const getAvatar = async (id) => {
+  const getFilesByTag = async (tag) => {
     try {
-      const avatarList = await doFetch(baseUrl + 'tags/avatar_' + id);
-      return avatarList;
+      const tagList = await doFetch(baseUrl + 'tags/' + tag);
+      return tagList;
     } catch (error) {
       throw new Error(error.message);
     }
   };
-  return {getAvatar};
+  return {getFilesByTag};
 };
 
 export {useLoadMedia, useLogin, useUser, useTag};

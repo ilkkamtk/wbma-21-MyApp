@@ -10,7 +10,7 @@ import {uploadsUrl} from '../utils/variables';
 const Profile = ({navigation}) => {
   const {isLoggedIn, setIsLoggedIn, user} = useContext(MainContext);
   const [avatar, setAvatar] = useState('http://placekitten.com/640');
-  const {getAvatar} = useTag();
+  const {getFilesByTag} = useTag();
   const logout = async () => {
     setIsLoggedIn(false);
     await AsyncStorage.clear();
@@ -23,7 +23,7 @@ const Profile = ({navigation}) => {
   useEffect(() => {
     const fetchAvatar = async () => {
       try {
-        const avatarList = await getAvatar(user.user_id);
+        const avatarList = await getFilesByTag('avatar_' + user.user_id);
         if (avatarList.length > 0) {
           setAvatar(uploadsUrl + avatarList.pop().filename);
         }
