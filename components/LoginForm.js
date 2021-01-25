@@ -18,7 +18,7 @@ const LoginForm = ({navigation}) => {
       setIsLoggedIn(true);
       await AsyncStorage.setItem('userToken', userData.token);
     } catch (error) {
-      console.error('postLogin error', error);
+      console.error('postLogin error', error.message);
       // TODO: add user notification about login error
     }
   };
