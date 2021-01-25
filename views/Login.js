@@ -19,11 +19,9 @@ const Login = ({navigation}) => {
     if (userToken) {
       try {
         const userData = await checkToken(userToken);
-        if (userData) {
-          setIsLoggedIn(true);
-          setUser(userData);
-          navigation.navigate('Home');
-        }
+        setIsLoggedIn(true);
+        setUser(userData);
+        navigation.navigate('Home');
       } catch (error) {
         console.log('token check failed', error.message);
       }

@@ -4,10 +4,17 @@ import {baseUrl} from '../utils/variables';
 // general function for fetching (options default value is empty object)
 const doFetch = async (url, options = {}) => {
   const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error('request failed');
+  const json = await response.json();
+  if (json.error) {
+    // if API response contains error message (use Postman to get further details)
+    throw new Error(json.message + ': ' + json.error);
+  } else if (!response.ok) {
+    // if API response does not contain error message, but there is some other error
+    throw new Error('doFetch failed');
+  } else {
+    // if all goes well
+    return json;
   }
-  return await response.json();
 };
 
 const useLoadMedia = () => {
@@ -76,7 +83,7 @@ const useUser = () => {
         method: 'GET',
         headers: {'x-access-token': token},
       };
-      const userData = await fetch(baseUrl + 'users/user', options);
+      const userData = await doFetch(baseUrl + 'users/user', options);
       return userData;
     } catch (error) {
       throw new Error(error.message);
