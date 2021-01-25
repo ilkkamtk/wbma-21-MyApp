@@ -93,4 +93,16 @@ const useUser = () => {
   return {postRegister, checkToken};
 };
 
-export {useLoadMedia, useLogin, useUser};
+const useTag = () => {
+  const getAvatar = async (id) => {
+    try {
+      const avatarList = await doFetch(baseUrl + 'tags/avatar_' + id);
+      return avatarList;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  return {getAvatar};
+};
+
+export {useLoadMedia, useLogin, useUser, useTag};
