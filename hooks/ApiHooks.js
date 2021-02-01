@@ -116,8 +116,8 @@ const useTag = () => {
   return {getFilesByTag};
 };
 
-const useMedia = (fd, token) => {
-  const upload = async () => {
+const useMedia = () => {
+  const upload = async (fd, token) => {
     const options = {
       method: 'POST',
       headers: {'x-access-token': token},
