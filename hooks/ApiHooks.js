@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 import {baseUrl} from '../utils/variables';
-import Upload from '../views/Upload';
 
 // general function for fetching (options default value is empty object)
 const doFetch = async (url, options = {}) => {
@@ -126,8 +125,7 @@ const useMedia = () => {
     };
     try {
       const response = await axios(options);
-      console.log('axios', response);
-      return response;
+      return response.data;
     } catch (e) {
       throw new Error(e.message);
     }
